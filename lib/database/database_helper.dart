@@ -31,7 +31,6 @@ class DatabaseHelper {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    // Create expenses table
     await db.execute('''
       CREATE TABLE $tableExpenses (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,7 +42,6 @@ class DatabaseHelper {
       )
     ''');
 
-    // Create categories table
     await db.execute('''
       CREATE TABLE $tableCategories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,13 +51,11 @@ class DatabaseHelper {
       )
     ''');
 
-    // Insert default categories
     for (var category in defaultCategories) {
       await db.insert(tableCategories, category.toMap());
     }
   }
 
-  // CRUD Operations for Expenses
   Future<int> insertExpense(Expense expense) async {
     final db = await database;
     return await db.insert(tableExpenses, expense.toMap());
